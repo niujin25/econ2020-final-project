@@ -3,10 +3,15 @@
 ## Data Download
 
 - climate: World Bank, [Droughts, floods, extreme temperatures (% of population, average 1990-2009)](https://data.worldbank.org/indicator/EN.CLC.MDAT.ZS)
-    - One variable.
+    - Click "Download csv"
 
 - world development indicators: World Bank, [World Development Indicators](https://databank.worldbank.org/source/world-development-indicators/Type/TABLE/preview/on#)
-    - Fourteen covariables.
+    - Database: World Development Index
+    - Country: select all (266)
+    - Series: make selections of 14 variables listed below (besides DFE)
+    - Time: 1990 to 2009
+    - Layout: Time - row; Series - column; Country - row
+    - Download options: csv
 
 The following table lists the variable names and their corresponding shortened variable names appearing in all outputs.
 
@@ -27,3 +32,14 @@ The following table lists the variable names and their corresponding shortened v
 | Prevalence of HIV, total (% of population ages 15-49) [SH.DYN.AIDS.ZS]                                          | hiv_prev             |
 | School enrollment, primary and secondary (gross), gender parity index (GPI) [SE.ENR.PRSC.FM.ZS]                 | school_enrol_pri_sec |
 | School enrollment, tertiary (gross), gender parity index (GPI) [SE.ENR.TERT.FM.ZS]                              | school_enrol_tert    |
+
+The raw data files are manually pasted into the `data` folder.
+
+**Note**: All necessary packages are installed within `renv`. One should run `renv::restore` to set up everything as the first step.
+
+1. `clean_data.r`: takes raw csvs, clean them, and save them as clean datasets into the same folder.
+    - output (`data` folder): `clean_climate.csv`, `clean_wdi.csv`, `clean_result.csv`.
+
+2. `figures.r`: takes cleaned data files from `data` folder from previous step, makes tables and graphs.
+    - output (`output` folder):
+

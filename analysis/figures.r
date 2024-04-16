@@ -1,5 +1,6 @@
 library(stargazer)
 library(ggplot2)
+library(patchwork)
 
 dat = read.csv("./data/result.csv")
 
@@ -8,32 +9,59 @@ dat = read.csv("./data/result.csv")
 dat[, 3: 17] |> stargazer(type = "text")
 
 # make graphs
-dat |> ggplot(aes(x = DFE)) + geom_histogram()  + theme_bw()
+
+### climate severity distribution
+cli <- dat |> ggplot(aes(x = DFE)) + geom_histogram()  + theme_bw()
 
 ### climate and output / income
-dat |> ggplot(aes(x = DFE, y = gdp_pc_ppp)) + geom_point() + theme_bw()
-
-dat |> ggplot(aes(x = DFE, y = net_income_pc)) + geom_point() + theme_bw()
+gdp <- dat |> ggplot(aes(x = DFE, y = gdp_pc_ppp)) +
+    geom_point() + theme_bw() +
+    geom_smooth(method = "lm", se = TRUE, color = 'turquoise')
 
 ### climate and health
-dat |> ggplot(aes(x = DFE, y = life_exp_birth)) + geom_point() +
-    geom_smooth(method = "lm", se = TRUE)
-dat |> ggplot(aes(x = DFE, y = mortality_rate)) + geom_point() +
-    geom_smooth(method = "lm", se = TRUE)
+liexp <- dat |> ggplot(aes(x = DFE, y = life_exp_birth)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") + theme_bw() +
+    geom_smooth(method = "lm", se = TRUE, color = 'turquoise')
+
+mort <- dat |> ggplot(aes(x = DFE, y = mortality_rate)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") + theme_bw() +
+    geom_smooth(method = "lm", se = TRUE, color = 'turquoise')
 
 ### climate and social welfare
-dat |> ggplot(aes(x = DFE, y = perc_tot_welfare)) + geom_point() +
+totwel <- dat |> ggplot(aes(x = DFE, y = perc_tot_welfare)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") +
     geom_smooth(method = "lm", se = TRUE)
 
-dat |> ggplot(aes(x = DFE, y = cov_social_insur)) + geom_point() +
+socins <- dat |> ggplot(aes(x = DFE, y = cov_social_insur)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") +
     geom_smooth(method = "lm", se = TRUE)
 
-dat |> ggplot(aes(x = DFE, y = literacy_rate)) + geom_point() +
-    geom_smooth(method = "lm", se = TRUE)
+prisec <- dat |> ggplot(aes(x = DFE, y = school_enrol_pri_sec)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") +
+    geom_smooth(method = "lm", se = TRUE, color = 'turquoise') + theme_bw()
 
-dat |> ggplot(aes(x = DFE, y = school_enrol_pri_sec)) + geom_point() +
-    geom_smooth(method = "lm", se = TRUE)
+ter <- dat |> ggplot(aes(x = DFE, y = school_enrol_tert)) +
+    geom_point(aes(color = gdp_pc_ppp)) +
+    scale_color_gradient(low = "black", high = "red") +
+    geom_smooth(method = "lm", se = TRUE, color = 'turquoise') + theme_bw()
 
-dat |> ggplot(aes(x = DFE, y = school_enrol_tert)) + 
-    geom_point(aes(color = gdp_pc_ppp)) + scale_color_gradient(low = "black", high = "red") +
-    geom_smooth(method = "lm", se = TRUE) + theme_bw()
+# outputting plots combined or singletons, using patchwork
+ggsave("./output/climate_dist.pdf", cli, width = 4, height = 4, units = "in")
+
+ggsave("./output/climate_gdp.pdf", gdp, width = 5, height = 6, units = "in")
+
+health <- liexp + mort + plot_layout(guides = "collect") 
+ggsave("./output/climate_health.pdf", health, 
+    width = 12, height = 10, units = "in")
+
+
+welfare <- ((totwel / prisec + plot_layout(axis_titles = "collect")) | 
+    (socins / ter) + plot_layout(axis_titles = "collect")) + 
+    plot_layout(guides = "collect")
+ggsave("./output/climate_welfare.pdf", welfare,
+    width = 10, height = 10, units = "in")

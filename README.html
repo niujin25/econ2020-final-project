@@ -53,14 +53,19 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>climate: World Bank, <a href="https://data.worldbank.org/indicator/EN.CLC.MDAT.ZS">Droughts, floods, extreme temperatures (% of population, average 1990-2009)</a>
 <ul>
-<li>One indicator.</li>
+<li>Click “Download csv”</li>
 </ul></li>
 <li>world development indicators: World Bank, <a href="https://databank.worldbank.org/source/world-development-indicators/Type/TABLE/preview/on#">World Development Indicators</a>
 <ul>
-<li>Fourteen covariables.</li>
+<li>Database: World Development Index</li>
+<li>Country: select all (266)</li>
+<li>Series: make selections of 14 variables listed below (besides DFE)</li>
+<li>Time: 1990 to 2009</li>
+<li>Layout: Time - row; Series - column; Country - row</li>
+<li>Download options: csv</li>
 </ul></li>
 </ul>
-<p>The following table lists the variable names and their corresponding shortened variable names as appearing in all outputs.</p>
+<p>The following table lists the variable names and their corresponding shortened variable names appearing in all outputs.</p>
 <table class="table">
 <colgroup>
 <col style="width: 83%">
@@ -91,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td style="text-align: center;">Coverage of social insurance programs (% of population) [per_si_allsi.cov_pop_tot]</td>
-<td style="text-align: center;">cov_social_insur”</td>
+<td style="text-align: center;">cov_social_insur</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">CPIA gender equality rating (1=low to 6=high) [IQ.CPA.GNDR.XQ]</td>
@@ -135,6 +140,18 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
+<p>The raw data files are manually pasted into the <code>data</code> folder.</p>
+<p><strong>Note</strong>: All necessary packages are installed within <code>renv</code>. One should run <code>renv::restore</code> to set up everything as the first step.</p>
+<ol type="1">
+<li><code>clean_data.r</code>: takes raw csvs, clean them, and save them as clean datasets into the same folder.
+<ul>
+<li>output (<code>data</code> folder): <code>clean_climate.csv</code>, <code>clean_wdi.csv</code>, <code>clean_result.csv</code>.</li>
+</ul></li>
+<li><code>figures.r</code>: takes cleaned data files from <code>data</code> folder from previous step, makes tables and graphs.
+<ul>
+<li>output (<code>output</code> folder):</li>
+</ul></li>
+</ol>
 </section>
 </section>
 
