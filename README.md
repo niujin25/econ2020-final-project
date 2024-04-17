@@ -33,9 +33,11 @@ The following table lists the variable names and their corresponding shortened v
 | School enrollment, primary and secondary (gross), gender parity index (GPI) [SE.ENR.PRSC.FM.ZS]                 | school_enrol_pri_sec |
 | School enrollment, tertiary (gross), gender parity index (GPI) [SE.ENR.TERT.FM.ZS]                              | school_enrol_tert    |
 
-The raw data files are manually pasted into the `data` folder.
+*The raw data files are manually pasted into the `data` folder.*
 
 **Note**: All necessary packages are installed within `renv`. One should run `renv::restore` to set up everything as the first step.
+
+## Producing Output
 
 1. `clean_data.r`: takes raw csvs, clean them, and save them as clean datasets into the same folder.
     - output (`data` folder): `clean_climate.csv`, `clean_wdi.csv`, `clean_result.csv`.
@@ -44,3 +46,5 @@ The raw data files are manually pasted into the `data` folder.
 2. `figures.r`: takes cleaned data files from `data` folder from previous step, makes tables and graphs.
     - output (`output` folder): `climate_dist.pdf`, `climate_gdp.pdf`, `climate_health.pdf`, `climate_welfare.pdf`.
 
+3. `analysis.r`: takes cleaned data files from `data` folder and run regressions, then output regression result tables as `.tex` files.
+    - output (`output` folder): `all_lm.tex`, `health_lm.tex`, `hiv_lm.tex`, `welfare_lm.tex`.

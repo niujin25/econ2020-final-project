@@ -9,7 +9,7 @@ stargazer(lin_mod, title = "DFE on all other variables",
 
 welfare_mod = lm(data = dat, "DFE ~ perc_tot_welfare + contrac_prev + 
  cov_social_insur + gdp_pc_ppp")
-tidy(welfare_mod)
+summary(welfare_mod)
 stargazer(welfare_mod, title = "DFE on welfare-related variables",
  type = "latex", out = "./output/welfare_lm.tex")
 
@@ -22,3 +22,10 @@ hiv_mod = lm(data = dat,"DFE ~ hiv_prev + gdp_pc_ppp")
 summary(hiv_mod)
 stargazer(lin_mod, title = "DFE on HIV prevalence",
  type = "latex", out = "./output/hiv_lm.tex")
+
+
+stargazer(lin_mod, welfare_mod, health_mod, hiv_mod,
+ title = "Regression Models Summary", 
+ dep.var.labels = "Droughts, floods, extreme temperatures",
+ column.labels = c("All", "Welfare", "Health", "HIV"),
+ type = "latex", out = "./output/lmsummary.tex")
