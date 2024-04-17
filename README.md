@@ -39,7 +39,8 @@ The raw data files are manually pasted into the `data` folder.
 
 1. `clean_data.r`: takes raw csvs, clean them, and save them as clean datasets into the same folder.
     - output (`data` folder): `clean_climate.csv`, `clean_wdi.csv`, `clean_result.csv`.
+    - output (`output` folder): `sum_stats.png` used stargazer to output text file, then screenshot.
 
 2. `figures.r`: takes cleaned data files from `data` folder from previous step, makes tables and graphs.
-    - output (`output` folder):
+    - output (`output` folder): `climate_dist.pdf`, `climate_gdp.pdf`, `climate_health.pdf`, `climate_welfare.pdf`.
 
