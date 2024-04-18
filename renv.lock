@@ -1374,6 +1374,23 @@
       ],
       "Hash": "6d538cff441f0f1f36db2209ac7495ac"
     },
+    "testdat": {
+      "Package": "testdat",
+      "Version": "0.4.2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "glue",
+        "lifecycle",
+        "rlang",
+        "stringr",
+        "testthat",
+        "tidyselect"
+      ],
+      "Hash": "7d67eebde54aeef0c5964c973985632d"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.2.1.1",
